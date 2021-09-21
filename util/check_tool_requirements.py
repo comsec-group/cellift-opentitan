@@ -173,6 +173,11 @@ class ToolReq:
             return (False,
                     'Failed to convert installed to semantic version: {}'
                     .format(err))
+
+        quirks = { '1.10.2.git.kitware.jobserver-1': '1.10.2' } # Ninja 1.10.2
+        if actual_semver in quirks:
+            actual_semver = quirks[actual_semver]
+
         try:
             actual_sv = StrictVersion(actual_semver)
         except ValueError as err:
